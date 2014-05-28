@@ -12,8 +12,8 @@ tables. As the MAC address for a VM doesn't change during live migration these
 Gratuitous ARP replies primarily help to update switches MAC tables (which MAC
 on which switch port).
 
-# Platform requirements The scripts have been made to work on a OpenNebula
-Cloud with QEMU/KVM as a hypervisor, libvirt as API to QEMU/KVM and OpenvSwitch
+# Platform requirements
+The scripts have been made to work on a OpenNebula Cloud with QEMU/KVM as a hypervisor, libvirt as API to QEMU/KVM and OpenvSwitch
 as the software bridge.  It should be fairly easy to adjust the scripts to
 enable support for other hypervisors/bridges (i.e. Xen and "legacy" bridging).
 
@@ -39,7 +39,7 @@ Port (vnet) on the OpenvSwitch. The script will temporarily add a flow to
 OpenvSwitch to allow "MAC spoofing" (something being prevented by default ONE
 rules). It will then use python script "grarp.py" to let the HOST send four
 Gratuitous ARP replies on the virtual network interface of the VM.
--
+
 # Installation
 * Paste the VM_HOOK code snippet in the relevant section of the oned.conf file on
 the OpenNebula FRONTEND.
