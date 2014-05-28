@@ -1,7 +1,7 @@
 one-grarp
 =========
 
-# VM_HOOK scripts to send Gratuitous ARP replies on behalf of VM's in OpenNebula cloud (ONE)
+## VM_HOOK scripts to send Gratuitous ARP replies on behalf of VM's in OpenNebula cloud (ONE)
 
 This project provides some scripts, and a hook to send Gratuitous ARP replies
 on behalf of Virtual Machines (VM) that have been (live-)migrated from one
@@ -12,12 +12,12 @@ tables. As the MAC address for a VM doesn't change during live migration these
 Gratuitous ARP replies primarily help to update switches MAC tables (which MAC
 on which switch port).
 
-## Platform requirements The scripts have been made to work on a OpenNebula
+# Platform requirements The scripts have been made to work on a OpenNebula
 Cloud with QEMU/KVM as a hypervisor, libvirt as API to QEMU/KVM and OpenvSwitch
 as the software bridge.  It should be fairly easy to adjust the scripts to
 enable support for other hypervisors/bridges (i.e. Xen and "legacy" bridging).
 
-## Software Requirements
+# Software Requirements
 - bash
 - base64 (decode base64 encoded VM TEMPLATES of ONE)
 - libxml-xpath-perl (providing xpath for XML path language
@@ -27,7 +27,7 @@ enable support for other hypervisors/bridges (i.e. Xen and "legacy" bridging).
 - scapy (python-scapy http://www.secdev.org/projects/scapy/)
 - ovs-ofctl (OpenFlow control tool for OpenvSwitch)
 
-## How does it work?
+# How does it work?
 The bash script "segrarp.sh" is being executed on the HOST the VM starts
 RUNNING when a VM_HOOK is being triggered by OpenNebula Daemon (oned). The
 VM_HOOK provided is triggered when a VM is RUNNING and reaches state ACTIVE.
@@ -40,7 +40,7 @@ OpenvSwitch to allow "MAC spoofing" (something being prevented by default ONE
 rules). It will then use python script "grarp.py" to let the HOST send four
 Gratuitous ARP replies on the virtual network interface of the VM.
 -
-## Installation
+# Installation
 * Paste the VM_HOOK code snippet in the relevant section of the oned.conf file on
 the OpenNebula FRONTEND.
 * Place the script "segrarp.sh" in the following directory on the OpenNebula
