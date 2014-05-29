@@ -22,6 +22,10 @@ enable support for other hypervisors/bridges (i.e. Xen and "legacy" bridging).
 - base64 (decode base64 encoded VM TEMPLATES of ONE)
 - libxml-xpath-perl (providing xpath for XML path language
   http://www.w3.org/TR/xpath/)
+**Make sure you've a patched copy where bug #68932 is fixed
+(https://rt.cpan.org/Public/Bug/Display.html?id=68932, ubuntu:
+https://bugs.launchpad.net/ubuntu/+source/libxml-xpath-perl/+bug/1321449).
+xpath -q should be quiet or scripts won't work**
 - perl (Data::Dumper)
 - python (v2)
 - scapy (python-scapy http://www.secdev.org/projects/scapy/)
