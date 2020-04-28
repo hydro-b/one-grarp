@@ -8,10 +8,7 @@
 # tables, and forward frames destined for the VM to the correct port(s)
 # on the HOST.
 
-ID=$1
-T64=$2
-PREV_STATE=$3
-PREV_LCM_STATE=$4
+T64=$1
 
 if
     [ "$#" -le "2" ]
@@ -49,7 +46,8 @@ base64=$(which base64)
 TMPLT=$($base64 -d <<< $T64)
 
 # libvirt template of VM
-LIBVIRT=$($virsh dumpxml one-$ID)
+DEPLOY_ID=$($xpath "string(VM/DEPLOY_ID)" <<< $TMPLT)
+LIBVIRT=$($virsh dumpxml $DEPLOY_ID)
 
 # determine the # of NIC's in the VM
 NR_NICS=$($xpath 'count(VM/TEMPLATE/NIC)' <<< $TMPLT)

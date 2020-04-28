@@ -45,8 +45,18 @@ rules). It will then use python script "grarp.py" to let the HOST send four
 Gratuitous ARP replies on the virtual network interface of the VM.
 
 # Installation
-* Paste the VM_HOOK code snippet in the relevant section of the oned.conf file on
-the OpenNebula FRONTEND.
+* Create a file called hook.tmpl with the following contents:
+
+```
+ARGUMENTS="$TEMPLATE"
+COMMAND="segrarp.sh"
+LCM_STATE="RUNNING"
+REMOTE="NO"
+RESOURCE="VM"
+STATE="ACTIVE"
+```
+
+* Run `onehook create hook.tmpl
 * Place the script "segrarp.sh" in the following directory on the OpenNebula
 FRONTEND: /var/lib/one/remotes/hooks
 
