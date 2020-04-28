@@ -63,22 +63,22 @@ then
 fi
 
 for NIC in $(eval echo "{1..$NR_NICS}"); do
-   IP=$($xpath "string(VM/TEMPLATE/NIC[$NIC]/IP)" <<< $TMPLT)
-   MAC=$($xpath "string(VM/TEMPLATE/NIC[$NIC]/MAC)" <<< $TMPLT)
-   VNET=$($xpath "string(/domain/devices/interface/mac[@address='$MAC']/../target/@dev)" <<< $LIBVIRT)
-   BRIDGE=$($xpath "string(/VM/TEMPLATE/NIC[$NIC]/BRIDGE)" <<< $TMPLT)
-   IN_PORT=$($sudo $ovs_in_port $BRIDGE $MAC)
+    IP=$($xpath "string(VM/TEMPLATE/NIC[$NIC]/IP)" <<< $TMPLT)
+    MAC=$($xpath "string(VM/TEMPLATE/NIC[$NIC]/MAC)" <<< $TMPLT)
+    VNET=$($xpath "string(/domain/devices/interface/mac[@address='$MAC']/../target/@dev)" <<< $LIBVIRT)
+    BRIDGE=$($xpath "string(/VM/TEMPLATE/NIC[$NIC]/BRIDGE)" <<< $TMPLT)
+    IN_PORT=$($sudo $ovs_in_port $BRIDGE $MAC)
 
-   if
-      [ -z "$VNET" ]
-   then
-       echo "No VNET Interface found, unable to send gratuitous ARP Reply"
-   else
-       echo "Adding temporary OpenFlow rule to allow MAC spoofing on $VNET"
-       $sudo ovs-ofctl add-flow $BRIDGE in_port=$IN_PORT,priority=50000,actions=normal
-       echo "Sending 4 gratuitous ARP Replies (based on $MAC/$IP) on behalf of VM $NAME on VNET $VNET"
-       $sudo $grarp -m $MAC -i $IP -v $VNET
-       echo "Deleting temporary OpenFlow rule to prevent MAC spoofing on $VNET"
-       $sudo ovs-ofctl --strict del-flows $BRIDGE in_port=$IN_PORT,priority=50000
-   fi
+    if
+        [ -z "$VNET" ]
+    then
+        echo "No VNET Interface found, unable to send gratuitous ARP Reply"
+    else
+        echo "Adding temporary OpenFlow rule to allow MAC spoofing on $VNET"
+        $sudo ovs-ofctl add-flow $BRIDGE in_port=$IN_PORT,priority=50000,actions=normal
+        echo "Sending 4 gratuitous ARP Replies (based on $MAC/$IP) on behalf of VM $NAME on VNET $VNET"
+        $sudo $grarp -m $MAC -i $IP -v $VNET
+        echo "Deleting temporary OpenFlow rule to prevent MAC spoofing on $VNET"
+        $sudo ovs-ofctl --strict del-flows $BRIDGE in_port=$IN_PORT,priority=50000
+    fi
 done
