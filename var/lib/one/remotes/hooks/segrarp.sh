@@ -11,7 +11,7 @@
 T64=$1
 
 if
-    [ "$#" -le "2" ]
+    [ "$#" -le "1" ]
 then
     echo "ERROR, please give a argument."
     exit 1
